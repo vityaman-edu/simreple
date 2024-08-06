@@ -1,6 +1,7 @@
 #include "simreple/Machine.hpp"
 #include "simreple/Shell.hpp"
 #include "simreple/SuggestionService.hpp"
+#include "simreple/SyntaxHighlighting.hpp"
 
 namespace simreple {
 
@@ -13,6 +14,7 @@ int main() {
       .input_prefix = ":)",
       .output_prefix = ";O",
       .suggest = [&](auto prefix) { return suggestions.candidates(prefix); },
+      .highlight = [](const auto& text, auto& colors) { syntaxHighlight(text, colors); },
   });
 
   while (const auto maybeInput = shell.readLine()) {

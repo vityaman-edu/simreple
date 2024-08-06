@@ -11,7 +11,8 @@ namespace simreple {
 Shell::Shell(Config config)
     : input_prefix_(std::move(config.input_prefix))
     , output_prefix_(std::move(config.output_prefix))
-    , suggest_(std::move(config.suggest)) {
+    , suggest_(std::move(config.suggest))
+    , highlight_(std::move(config.highlight)) {
   using replxx::Replxx;
 
   input_prefix_ += ' ';
@@ -29,6 +30,10 @@ Shell::Shell(Config config)
   replxx_.set_hint_callback([this](const auto& text, int& /* length */, Replxx::Color& color) {
     color = Replxx::Color::YELLOW;
     return suggest_(text);
+  });
+
+  replxx_.set_highlighter_callback([this](const auto& text, auto& colors) {
+    highlight_(text, colors);
   });
 }
 

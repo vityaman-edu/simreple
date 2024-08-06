@@ -12,6 +12,7 @@ add_executable(
     ${SIMREPLE_SOURCE_PATH}/Shell.cpp
     ${SIMREPLE_SOURCE_PATH}/Machine.cpp
     ${SIMREPLE_SOURCE_PATH}/SuggestionService.cpp
+    ${SIMREPLE_SOURCE_PATH}/SyntaxHighlighting.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/antlr/SimpLaBaseListener.cpp  
     ${CMAKE_CURRENT_BINARY_DIR}/antlr/SimpLaLexer.cpp     
     ${CMAKE_CURRENT_BINARY_DIR}/antlr/SimpLaParser.cpp
