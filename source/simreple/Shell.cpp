@@ -1,6 +1,8 @@
 #include "Shell.hpp"
 
 #include <iostream>
+#include <ranges>
+#include <vector>
 
 #include "replxx.hxx"
 
@@ -8,9 +10,26 @@ namespace simreple {
 
 Shell::Shell(Config config)
     : input_prefix_(std::move(config.input_prefix))
-    , output_prefix_(std::move(config.output_prefix)) {
+    , output_prefix_(std::move(config.output_prefix))
+    , suggest_(std::move(config.suggest)) {
+  using replxx::Replxx;
+
   input_prefix_ += ' ';
   output_prefix_ += ' ';
+
+  replxx_.set_completion_callback([this](const auto& text, int& /* length */) {
+    return              //
+        suggest_(text)  //
+        | std::views::transform([](const auto& candidate) {
+            return Replxx::Completion(candidate, Replxx::Color::BLUE);
+          })  //
+        | std::ranges::to<std::vector>();
+  });
+
+  replxx_.set_hint_callback([this](const auto& text, int& /* length */, Replxx::Color& color) {
+    color = Replxx::Color::YELLOW;
+    return suggest_(text);
+  });
 }
 
 std::optional<std::string> Shell::readLine() {

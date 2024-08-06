@@ -16,11 +16,16 @@ assignment
 
 expression
     : sum
-    | literal
+    | atom
     ;
 
 sum
-    : variableRef (PLUS variableRef)*
+    : atom (PLUS atom)*
+    ;
+
+atom
+    : literal
+    | variableRef
     ;
 
 literal
