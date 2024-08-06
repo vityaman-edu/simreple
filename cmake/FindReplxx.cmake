@@ -13,3 +13,5 @@ ExternalProject_Add(
 set(REPLXX_INSTALLATION ${CMAKE_BINARY_DIR}/replxx/install)
 set(REPLXX_INCLUDE_DIRS ${REPLXX_INSTALLATION}/include)
 set(REPLXX_STATIC ${REPLXX_INSTALLATION}/lib/libreplxx.a)
+
+include_directories(${REPLXX_INCLUDE_DIRS})

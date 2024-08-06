@@ -4,6 +4,7 @@ get_filename_component(SIMREPLE_SOURCE_PATH "./${PROJECT_NAME}" ABSOLUTE)
 add_executable(
     ${PROJECT_NAME} 
     ${SIMREPLE_SOURCE_PATH}/Main.cpp
+    ${SIMREPLE_SOURCE_PATH}/Shell.cpp
 )
 
 target_include_directories(
