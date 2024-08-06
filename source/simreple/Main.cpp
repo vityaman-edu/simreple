@@ -4,12 +4,13 @@ namespace simreple {
 
 int main() {
   Shell shell({
-      .prompt = ":) ",
+      .input_prefix = ":)",
+      .output_prefix = ";O",
   });
 
   while (const auto maybeInput = shell.readLine()) {
     const auto& input = maybeInput.value();
-    shell.writeLine(";O " + input);
+    shell.writeLine(input);
   }
 
   return 0;

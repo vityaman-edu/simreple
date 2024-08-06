@@ -6,11 +6,15 @@
 
 namespace simreple {
 
-Shell::Shell(Config config) : prompt_(std::move(config.prompt)) {
+Shell::Shell(Config config)
+    : input_prefix_(std::move(config.input_prefix))
+    , output_prefix_(std::move(config.output_prefix)) {
+  input_prefix_ += ' ';
+  output_prefix_ += ' ';
 }
 
 std::optional<std::string> Shell::readLine() {
-  const auto* input = replxx_.input(prompt_);
+  const auto* input = replxx_.input(input_prefix_);
   if (input == nullptr) {
     return std::nullopt;
   }
@@ -21,7 +25,7 @@ std::optional<std::string> Shell::readLine() {
 }
 
 void Shell::writeLine(std::string_view line) {  // NOLINT
-  std::cout << line << std::endl;
+  std::cout << output_prefix_ << line << std::endl;
 }
 
 }  // namespace simreple

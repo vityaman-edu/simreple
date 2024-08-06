@@ -10,7 +10,8 @@ namespace simreple {
 class Shell {
 public:
   struct Config {
-    std::string prompt;
+    std::string input_prefix;
+    std::string output_prefix;
   };
 
   explicit Shell(Config config);
@@ -19,7 +20,8 @@ public:
   void writeLine(std::string_view line);
 
 private:
-  std::string prompt_;
+  std::string input_prefix_;
+  std::string output_prefix_;
   replxx::Replxx replxx_;
 };
 
