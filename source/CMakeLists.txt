@@ -5,6 +5,7 @@ add_executable(
     ${PROJECT_NAME} 
     ${SIMREPLE_SOURCE_PATH}/Main.cpp
     ${SIMREPLE_SOURCE_PATH}/Shell.cpp
+    ${SIMREPLE_SOURCE_PATH}/Machine.cpp
 )
 
 target_include_directories(

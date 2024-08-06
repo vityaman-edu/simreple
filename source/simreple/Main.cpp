@@ -1,3 +1,4 @@
+#include "simreple/Machine.hpp"
 #include "simreple/Shell.hpp"
 
 namespace simreple {
@@ -8,9 +9,12 @@ int main() {
       .output_prefix = ";O",
   });
 
+  Machine machine;
+
   while (const auto maybeInput = shell.readLine()) {
     const auto& input = maybeInput.value();
-    shell.writeLine(input);
+    const auto output = machine.evaluate(input);
+    shell.writeLine(output);
   }
 
   return 0;
