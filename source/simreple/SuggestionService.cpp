@@ -42,7 +42,7 @@ SuggestionService::SuggestionService(Machine* machine) : machine_(machine) {
 }
 
 std::vector<std::string> SuggestionService::candidates(std::string_view prefix) {  // NOLINT
-  antlr4::ANTLRInputStream chars(prefix);
+  antlr4::ANTLRInputStream chars(prefix.substr(0, lastWordIndex(prefix)));
   SimpLaLexer lexer(&chars);
   antlr4::BufferedTokenStream tokens(&lexer);
   SimpLaParser parser(&tokens);
