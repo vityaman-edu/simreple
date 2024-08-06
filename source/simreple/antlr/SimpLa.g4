@@ -7,7 +7,6 @@ grammar SimpLa;
 
 statement
     : assignment
-    | expression
     ;
 
 assignment

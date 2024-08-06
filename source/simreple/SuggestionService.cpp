@@ -48,6 +48,10 @@ std::vector<std::string> SuggestionService::candidates(std::string_view prefix) 
   SimpLaParser parser(&tokens);
   c3::CodeCompletionCore completion(&parser);
 
+  completion.ignoredTokens = {
+      SimpLaLexer::INTEGER,
+  };
+
   lexer.removeErrorListeners();
   parser.removeErrorListeners();
   tokens.fill();
@@ -61,25 +65,34 @@ std::vector<std::string> SuggestionService::candidates(std::string_view prefix) 
     return lowercase(candidate).starts_with(last);
   };
 
+  const auto display = [&](std::size_t token) {
+    const auto& vocabulary = lexer.getVocabulary();
+
+    auto display = vocabulary.getDisplayName(token);
+
+    if (display.starts_with('\'')) {
+      assert(display.ends_with('\''));
+      display.erase(std::begin(display));
+      display.erase(std::prev(std::end(display)));
+    }
+
+    return display;
+  };
+
   std::vector<std::string> result;
 
   for (const auto& [token, follow] : candidates.tokens) {
-    auto candidate = [&] {
-      const auto& vocabulary = lexer.getVocabulary();
-
-      auto display = vocabulary.getDisplayName(token);
-
-      if (display.starts_with('\'')) {
-        assert(display.ends_with('\''));
-        display.erase(std::begin(display));
-        display.erase(std::prev(std::end(display)));
+    if (token == SimpLaLexer::ID) {
+      for (const auto& [key, _] : machine_->variables()) {
+        if (isSuitable(key)) {
+          result.emplace_back(key);
+        }
       }
-
-      return display;
-    }();
-
-    if (isSuitable(candidate)) {
-      result.emplace_back(std::move(candidate));
+    } else {
+      auto candidate = display(token);
+      if (isSuitable(candidate)) {
+        result.emplace_back(std::move(candidate));
+      }
     }
   }
 

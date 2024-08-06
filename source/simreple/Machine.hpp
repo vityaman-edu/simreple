@@ -15,9 +15,7 @@ public:
   const std::unordered_map<std::string, std::int64_t>& variables() const;
 
 private:
-  std::any visitStatement(SimpLaParser::StatementContext* ctx) override;
   std::any visitAssignment(SimpLaParser::AssignmentContext* ctx) override;
-  std::any visitExpression(SimpLaParser::ExpressionContext* ctx) override;
   std::any visitSum(SimpLaParser::SumContext* ctx) override;
   std::any visitLiteral(SimpLaParser::LiteralContext* ctx) override;
   std::any visitVariableRef(SimpLaParser::VariableRefContext* ctx) override;
