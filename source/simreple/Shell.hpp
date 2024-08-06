@@ -7,7 +7,7 @@
 
 namespace simreple {
 
-class Shell {
+class Shell final {
 public:
   struct Config {
     std::string input_prefix;
