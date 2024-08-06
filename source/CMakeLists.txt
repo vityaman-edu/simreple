@@ -29,4 +29,5 @@ target_link_libraries(
     ${PROJECT_NAME} PRIVATE
     ${REPLXX_STATIC}
     ${ANTLR4_STATIC}
+    ${ANTLR4C3_STATIC}
 )
